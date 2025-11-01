@@ -1,0 +1,238 @@
+{
+	"info": {
+		"_postman_id": "c91689dc-a379-4bb8-9291-94c642c5d7a9",
+		"name": "Axreng Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25359732"
+	},
+	"item": [
+		{
+			"name": "Start search - LOCAL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse response JSON\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"// Extract and save search ID\r",
+							"var searchId = jsonData.id;\r",
+							"pm.collectionVariables.set(\"localSearchId\", searchId);\r",
+							"\r",
+							"// Log for confirmation\r",
+							"console.log(\"✅ Search ID saved: \" + searchId);\r",
+							"\r",
+							"// Optional: Validate response\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has ID\", function () {\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"    pm.expect(jsonData.id).to.have.lengthOf(8);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"keyword\": \"security\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localBaseURL}}/crawl",
+					"host": [
+						"{{localBaseURL}}"
+					],
+					"path": [
+						"crawl"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get search  - LOCAL",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{localBaseURL}}/crawl/{{localSearchId}}",
+					"host": [
+						"{{localBaseURL}}"
+					],
+					"path": [
+						"crawl",
+						"{{localSearchId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Start search - PROD",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse response JSON\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"// Extract and save search ID\r",
+							"var searchId = jsonData.id;\r",
+							"pm.collectionVariables.set(\"productionSearchId\", searchId);\r",
+							"\r",
+							"// Log for confirmation\r",
+							"console.log(\"✅ Search ID saved: \" + searchId);\r",
+							"\r",
+							"// Optional: Validate response\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has ID\", function () {\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"    pm.expect(jsonData.id).to.have.lengthOf(8);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"keyword\": \"security\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{productionBaseURL}}/crawl",
+					"host": [
+						"{{productionBaseURL}}"
+					],
+					"path": [
+						"crawl"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get search - PROD",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{productionBaseURL}}/crawl/{{productionSearchId}}",
+					"host": [
+						"{{productionBaseURL}}"
+					],
+					"path": [
+						"crawl",
+						"{{productionSearchId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "localBaseURL",
+			"value": ""
+		},
+		{
+			"key": "localSearchId",
+			"value": ""
+		},
+		{
+			"key": "productionBaseURL",
+			"value": ""
+		},
+		{
+			"key": "productionSearchId",
+			"value": ""
+		}
+	]
+}
